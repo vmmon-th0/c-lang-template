@@ -1,11 +1,7 @@
-#include "test.h"
-
-int sum(int a, int b)
-{
-    return a + b;
-}
+#include "template.h"
 
 int main(void)
 {
-    printf("hello world");
+    printf("hello world\n");
+    return 0;
 }
