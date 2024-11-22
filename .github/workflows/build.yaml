@@ -8,19 +8,48 @@ on:
     branches:
       - main
 
+permissions:
+  contents: write
+
 jobs:
+  setup-readme:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Update README
+      run: |
+        sed -i "s/{{PROJECT_NAME}}/${{ github.repository }}/" README.md
+
+    - name: Check if README changed
+      id: check_readme
+      run: |
+        if git diff --quiet README.md; then
+          echo "README_UNCHANGED=true" >> $GITHUB_ENV
+        else
+          echo "README_UNCHANGED=false" >> $GITHUB_ENV
+        fi
+
+    - name: Commit and push changes
+      if: env.README_UNCHANGED == 'false'
+      run: |
+        git config user.name "github-actions"
+        git config user.email "actions@github.com"
+        git add README.md
+        git commit -m "Updated README"
+        git push
+
   build:
+    needs: setup-readme
     runs-on: ubuntu-latest
 
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
 
     - name: Install dependencies
       run: sudo apt-get install -y build-essential
 
     - name: Compile code
       run: make format
-
-#    - name: Run tests (optional)
-#      run: make test
