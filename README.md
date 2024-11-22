@@ -1,1 +1,1 @@
-# {{PROJECT_NAME}}
+# vmmon-th0/c-lang-template
