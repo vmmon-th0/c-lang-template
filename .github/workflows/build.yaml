@@ -20,7 +20,7 @@ jobs:
 
     - name: Update README
       run: |
-        sed -i "s/{{PROJECT_NAME}}/${{ github.repository }}/" README.md
+        sed -i "s|{{PROJECT_NAME}}|${{ github.repository }}|" README.md
 
     - name: Check if README changed
       id: check_readme
