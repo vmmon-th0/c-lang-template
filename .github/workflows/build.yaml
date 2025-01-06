@@ -19,5 +19,5 @@ jobs:
     - name: Install dependencies
       run: sudo apt-get install -y build-essential
 
-    - name: Compile code
+    - name: Format code
       run: make format
